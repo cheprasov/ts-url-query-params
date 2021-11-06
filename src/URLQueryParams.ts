@@ -1,4 +1,6 @@
+import URLSearchParamsFactory from './URLSearchParamsFactory';
 
+import type URLSearchParamsInf from './URLSearchParamsInf';
 
 export default class URLQueryParams {
   
@@ -55,3 +57,5 @@ export default class URLQueryParams {
   values(...args) {
     return this._urlSearchParams.values(...args);
   }
+
+}
