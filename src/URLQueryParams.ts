@@ -1,3 +1,5 @@
+// spec: https://url.spec.whatwg.org/#urlsearchparams
+
 import URLSearchParamsFactory from './URLSearchParamsFactory';
 
 import type URLSearchParamsInf from './URLSearchParamsInf';
