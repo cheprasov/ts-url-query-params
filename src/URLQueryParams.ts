@@ -1,63 +1,69 @@
-// spec: https://url.spec.whatwg.org/#urlsearchparams
-
 import URLSearchParamsFactory from './URLSearchParamsFactory';
 
-import type URLSearchParamsInf from './URLSearchParamsInf';
-
-export default class URLQueryParams {
+export default class URLQueryParams implements URLSearchParams {
   
-  private _urlSearchParams: URLSearchParamsInf;
+  private readonly _urlSearchParams: URLSearchParams;
+  [Symbol.iterator]: () => IterableIterator<[string, string]>
   
-  constructor(init) {
+  constructor(init?: string[] | Record<string, string> | string) {
     this._urlSearchParams = URLSearchParamsFactory.create(init);
+    this[Symbol.iterator] = this._urlSearchParams[Symbol.iterator].bind(this._urlSearchParams);
   }
 
-  append(...args) {
-    return this._urlSearchParams.append(...args);
+  append(name: string, value: string) {
+    return this._urlSearchParams.append(name, value);
   }
 
-  delete(...args) {
-    return this._urlSearchParams.delete(...args);
+  delete(name: string) {
+    return this._urlSearchParams.delete(name);
   }
 
-  entries(...args) {
-    return this._urlSearchParams.entries(...args);
+  entries() {
+    return this._urlSearchParams.entries();
   }
 
-  forEach(...args) {
-    return this._urlSearchParams.forEach(...args);
+  forEach(callbackfn: (value: string, key: string, parent: URLSearchParams) => void, thisArg?: any) {
+    return this._urlSearchParams.forEach(callbackfn, thisArg);
   }
 
-  get(...args) {
-    return this._urlSearchParams.get(...args);
+  get(name: string) {
+    return this._urlSearchParams.get(name);
   }
 
-  getAll(...args) {
-    return this._urlSearchParams.getAll(...args);
+  getAll(name: string) {
+    return this._urlSearchParams.getAll(name);
   }
 
-  has(...args) {
-    return this._urlSearchParams.has(...args);
+  has(name: string) {
+    return this._urlSearchParams.has(name);
   }
 
-  keys(...args) {
-    return this._urlSearchParams.keys(...args);
+  keys() {
+    return this._urlSearchParams.keys();
   }
 
-  set(...args) {
-    return this._urlSearchParams.set(...args);
+  set(name: string, value: string) {
+    return this._urlSearchParams.set(name, value);
   }
 
-  sort(...args) {
-    return this._urlSearchParams.sort(...args);
+  sort() {
+    return this._urlSearchParams.sort();
   }
 
-  toString(...args) {
-    return this._urlSearchParams.toString(...args);
+  toString(): string {
+    const params: string[] = [];
+    this._urlSearchParams.forEach((value, key) => {
+      params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+    });
+    return params.join('&');
   }
 
-  values(...args) {
-    return this._urlSearchParams.values(...args);
+  values() {
+    return this._urlSearchParams.values();
+  }
+
+  toObjet(): Record<string, string> {
+    return Object.fromEntries(this.entries());
   }
 
 }
