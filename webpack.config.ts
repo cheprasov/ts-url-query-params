@@ -1,6 +1,7 @@
-const path = require('path');
+import path from 'path';
+import webpack from 'webpack';
 
-module.exports = {
+const config: webpack.Configuration = {
     entry: {
         'index.js': './src/index.ts',
     },
@@ -24,5 +25,12 @@ module.exports = {
             },
         ],
     },
-    optimization: {},
+    optimization: {
+        minimize: true,
+        moduleIds: 'deterministic',
+        innerGraph: true,
+        concatenateModules: true
+    },
 };
+
+export default config;

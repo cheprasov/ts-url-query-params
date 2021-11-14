@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "noImplicitAny": true,
-    "module": "es2015",
+    "module": "commonjs",
+    "declaration": true,
     "target": "es5",
     "allowJs": true,
     "skipLibCheck": true,

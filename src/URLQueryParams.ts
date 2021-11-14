@@ -1,12 +1,17 @@
-import URLSearchParamsFactory from './URLSearchParamsFactory';
+
+export const isURLQueryParamsInstance = (init: any): init is URLQueryParams  => {
+  return init instanceof URLQueryParams;
+}
 
 export default class URLQueryParams implements URLSearchParams {
   
   private readonly _urlSearchParams: URLSearchParams;
   [Symbol.iterator]: () => IterableIterator<[string, string]>
   
-  constructor(init?: string[] | Record<string, string> | string) {
-    this._urlSearchParams = URLSearchParamsFactory.create(init);
+  constructor(init?: string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams) {
+    this._urlSearchParams = new URLSearchParams(
+        isURLQueryParamsInstance(init) ? init._urlSearchParams : init,
+    );
     this[Symbol.iterator] = this._urlSearchParams[Symbol.iterator].bind(this._urlSearchParams);
   }
 
@@ -52,7 +57,7 @@ export default class URLQueryParams implements URLSearchParams {
 
   toString(): string {
     const params: string[] = [];
-    this._urlSearchParams.forEach((value, key) => {
+    this.forEach((value, key) => {
       params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
     });
     return params.join('&');
@@ -62,8 +67,12 @@ export default class URLQueryParams implements URLSearchParams {
     return this._urlSearchParams.values();
   }
 
-  toObjet(): Record<string, string> {
-    return Object.fromEntries(this.entries());
+  toObject(): Record<string, string> {
+    const obj: Record<string, string> = {};
+    this.forEach((value, key) => {
+      obj[key] = value;
+    });
+    return obj;
   }
 
 }
