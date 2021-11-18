@@ -16,6 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
+    "downlevelIteration": true,
     "lib": [
       "dom",
       "dom.iterable",

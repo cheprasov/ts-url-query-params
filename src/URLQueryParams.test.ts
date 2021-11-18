@@ -44,4 +44,15 @@ describe('URLQueryParams', () => {
     });
   });
 
+  describe('<IterableIterator>', () => {
+    it('should be iterable', () => {
+      const qp = new URLQueryParams('foo=bar&q=42&empty=')
+      const obj: Record<string, string> = {};
+      for (const [ key, value ] of qp) {
+        obj[key] = value;
+      }
+      expect(qp.toObject()).toEqual(obj);
+    });
+  });
+
 });
