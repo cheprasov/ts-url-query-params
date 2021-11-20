@@ -1,3 +1,4 @@
+import encodeURIComponentRFC3986 from './encodeURIComponentRFC3986';
 
 export type InitType = string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams;
 
@@ -61,20 +62,10 @@ export default class URLQueryParams implements URLSearchParams {
     return this._urlSearchParams.set(name, value);
   }
 
+  // todo: setMulti(init: InitType) {}
+
   sort() {
     return this._urlSearchParams.sort();
-  }
-
-  toString(): string {
-    const params: string[] = [];
-    this.forEach((value, key) => {
-      params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-    });
-    return params.join('&');
-  }
-
-  values() {
-    return this._urlSearchParams.values();
   }
 
   toObject(): Record<string, string> {
@@ -83,6 +74,18 @@ export default class URLQueryParams implements URLSearchParams {
       obj[key] = value;
     });
     return obj;
+  }
+
+  toString(): string {
+    const params: string[] = [];
+    this.forEach((value, key) => {
+      params.push(`${encodeURIComponentRFC3986(key)}=${encodeURIComponentRFC3986(value)}`);
+    });
+    return params.join('&');
+  }
+
+  values() {
+    return this._urlSearchParams.values();
   }
 
 }
