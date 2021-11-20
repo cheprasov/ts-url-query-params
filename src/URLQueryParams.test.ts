@@ -13,10 +13,16 @@ describe('isURLQueryParamsInstance', () => {
 });
 
 describe('URLQueryParams', () => {
+  let urlQueryParams: URLQueryParams;
+
+  beforeEach(() => {
+    urlQueryParams = new URLQueryParams('foo=bar&q=42');
+    expect(urlQueryParams.toObject()).toEqual({ foo: 'bar', 'q': '42' });
+  });
 
   describe('constructor', () => {
     it('should not be instance of URLSearchParams', () => {
-      expect(new URLQueryParams()).not.toBeInstanceOf(URLSearchParams);
+      expect(urlQueryParams).not.toBeInstanceOf(URLSearchParams);
     });
 
     it('should allow to use URLSearchParams as init param', () => {
@@ -24,7 +30,7 @@ describe('URLQueryParams', () => {
     });
 
     it('should allow to use URLQueryParams as init param', () => {
-      expect(new URLQueryParams(new URLQueryParams('foo=bar&q=42')).toObject()).toEqual({ foo: 'bar', 'q': '42' });
+      expect(new URLQueryParams(urlQueryParams).toObject()).toEqual({ foo: 'bar', 'q': '42' });
     });
 
     it('should allow to use an object as init param', () => {
@@ -52,6 +58,36 @@ describe('URLQueryParams', () => {
         obj[key] = value;
       }
       expect(qp.toObject()).toEqual(obj);
+    });
+  });
+
+  describe('append', () => {
+    it('should append new params', () => {
+      urlQueryParams.append('test', 'passed');
+      expect(urlQueryParams.getAll('test')).toEqual(['passed']);
+    });
+
+    it('should append param with same key', () => {
+      urlQueryParams.append('test', 'passed');
+      urlQueryParams.append('test', 'ok');
+      expect(urlQueryParams.getAll('test')).toEqual(['passed', 'ok']);
+    });
+  });
+
+  describe('delete', () => {
+    it('should delete param by key', () => {
+      urlQueryParams.delete('foo');
+      expect(urlQueryParams.has('foo')).toBeFalsy();
+    });
+  });
+
+  describe('entries', () => {
+    it('should return params as entries', () => {
+      const entries = urlQueryParams.entries();
+      expect(typeof entries[Symbol.iterator]).toEqual('function');
+      expect(entries.next()).toEqual({ done: false, value: ['foo', 'bar'] });
+      expect(entries.next()).toEqual({ done: false, value: ['q', '42'] });
+      expect(entries.next()).toEqual({ done: true, value: undefined });
     });
   });
 

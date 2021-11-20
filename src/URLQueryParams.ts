@@ -1,4 +1,6 @@
 
+export type InitType = string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams;
+
 export const isURLQueryParamsInstance = (init: any): init is URLQueryParams  => {
   return init instanceof URLQueryParams;
 }
@@ -8,7 +10,7 @@ export default class URLQueryParams implements URLSearchParams {
   private readonly _urlSearchParams: URLSearchParams;
   [Symbol.iterator]: () => IterableIterator<[string, string]>
   
-  constructor(init?: string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams) {
+  constructor(init?: InitType) {
     this._urlSearchParams = new URLSearchParams(
         isURLQueryParamsInstance(init) ? init._urlSearchParams : init,
     );
@@ -19,9 +21,13 @@ export default class URLQueryParams implements URLSearchParams {
     return this._urlSearchParams.append(name, value);
   }
 
+  // todo: appendMulti(init: InitType) {}
+
   delete(name: string) {
     return this._urlSearchParams.delete(name);
   }
+
+  // todo: deleteMulti(names: string[]) {}
 
   entries() {
     return this._urlSearchParams.entries();
