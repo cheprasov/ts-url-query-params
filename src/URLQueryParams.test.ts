@@ -16,8 +16,8 @@ describe('URLQueryParams', () => {
   let urlQueryParams: URLQueryParams;
 
   beforeEach(() => {
-    urlQueryParams = new URLQueryParams('foo=bar&q=42');
-    expect(urlQueryParams.toObject()).toEqual({ foo: 'bar', 'q': '42' });
+    urlQueryParams = new URLQueryParams('foo=bar&q=42&empty=&');
+    expect(urlQueryParams.toObject()).toEqual({ foo: 'bar', 'q': '42', empty: '' });
   });
 
   describe('constructor', () => {
@@ -26,11 +26,11 @@ describe('URLQueryParams', () => {
     });
 
     it('should allow to use URLSearchParams as init param', () => {
-      expect(new URLQueryParams(new URLSearchParams('foo=bar&q=42')).toObject()).toEqual({ foo: 'bar', 'q': '42' });
+      expect(new URLQueryParams(new URLSearchParams('foo=bar&q=42')).toObject()).toEqual({ foo: 'bar', 'q': '42'});
     });
 
     it('should allow to use URLQueryParams as init param', () => {
-      expect(new URLQueryParams(urlQueryParams).toObject()).toEqual({ foo: 'bar', 'q': '42' });
+      expect(new URLQueryParams(urlQueryParams).toObject()).toEqual({ foo: 'bar', 'q': '42', empty: '' });
     });
 
     it('should allow to use an object as init param', () => {
@@ -52,12 +52,11 @@ describe('URLQueryParams', () => {
 
   describe('<IterableIterator>', () => {
     it('should be iterable', () => {
-      const qp = new URLQueryParams('foo=bar&q=42&empty=')
       const obj: Record<string, string> = {};
-      for (const [ key, value ] of qp) {
+      for (const [ key, value ] of urlQueryParams) {
         obj[key] = value;
       }
-      expect(qp.toObject()).toEqual(obj);
+      expect(urlQueryParams.toObject()).toEqual(obj);
     });
   });
 
@@ -87,7 +86,28 @@ describe('URLQueryParams', () => {
       expect(typeof entries[Symbol.iterator]).toEqual('function');
       expect(entries.next()).toEqual({ done: false, value: ['foo', 'bar'] });
       expect(entries.next()).toEqual({ done: false, value: ['q', '42'] });
+      expect(entries.next()).toEqual({ done: false, value: ['empty', ''] });
       expect(entries.next()).toEqual({ done: true, value: undefined });
+    });
+  });
+
+  describe('forEach', () => {
+    it('should iterate over items', () => {
+      const obj: Record<string, string> = {};
+      urlQueryParams.forEach((value, key, parent) => {
+        expect(parent).toBe(urlQueryParams);
+        obj[key] = value;
+      });
+      expect(obj).toEqual(urlQueryParams.toObject());
+    });
+
+    it('should user thisArg right', () => {
+      const obj: Record<string, string> = {};
+      urlQueryParams.forEach(function (value, key, parent) {
+        // @ts-ignore
+        this[key] = value;
+      }, obj);
+      expect(obj).toEqual(urlQueryParams.toObject());
     });
   });
 

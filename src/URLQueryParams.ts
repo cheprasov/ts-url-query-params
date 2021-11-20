@@ -1,8 +1,8 @@
 
 export type InitType = string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams;
 
-export const isURLQueryParamsInstance = (init: any): init is URLQueryParams  => {
-  return init instanceof URLQueryParams;
+export const isURLQueryParamsInstance = (some: any): some is URLQueryParams  => {
+  return some instanceof URLQueryParams;
 }
 
 export default class URLQueryParams implements URLSearchParams {
@@ -34,7 +34,11 @@ export default class URLQueryParams implements URLSearchParams {
   }
 
   forEach(callbackfn: (value: string, key: string, parent: URLSearchParams) => void, thisArg?: any) {
-    return this._urlSearchParams.forEach(callbackfn, thisArg);
+    const self = this;
+    const callback = thisArg ? callbackfn.bind(thisArg) : callbackfn;
+    return this._urlSearchParams.forEach(function (value, key) {
+      return callback(value, key, self);
+    });
   }
 
   get(name: string) {
