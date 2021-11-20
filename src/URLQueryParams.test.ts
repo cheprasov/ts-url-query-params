@@ -111,4 +111,38 @@ describe('URLQueryParams', () => {
     });
   });
 
+  describe('get', () => {
+    it('should return value by key', () => {
+      expect(urlQueryParams.get('foo')).toEqual('bar');
+      expect(urlQueryParams.get('q')).toEqual('42');
+      expect(urlQueryParams.get('empty')).toEqual('');
+    });
+
+    it('should return first value for key', () => {
+      urlQueryParams.append('foo', 'baz');
+      expect(urlQueryParams.get('foo')).toEqual('bar');
+    });
+
+    it('should return null if key is not exist', () => {
+      expect(urlQueryParams.get('bad')).toBeNull();
+    });
+  });
+
+  describe('getAll', () => {
+    it('should return values by key', () => {
+      expect(urlQueryParams.getAll('foo')).toEqual(['bar']);
+      expect(urlQueryParams.getAll('q')).toEqual(['42']);
+      expect(urlQueryParams.getAll('empty')).toEqual(['']);
+    });
+
+    it('should return all values for key', () => {
+      urlQueryParams.append('foo', 'baz');
+      expect(urlQueryParams.getAll('foo')).toEqual(['bar', 'baz']);
+    });
+
+    it('should return empty list if key is not exist', () => {
+      expect(urlQueryParams.getAll('bad')).toEqual([]);
+    });
+  });
+
 });
