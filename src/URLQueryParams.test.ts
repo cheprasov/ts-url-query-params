@@ -428,7 +428,7 @@ describe('URLQueryParams', () => {
   });
 
   describe('keys', () => {
-    it('should return list of keys', () => {
+    it('should return iterator for keys', () => {
       const keys = urlQueryParams.keys();
       expect(typeof keys[Symbol.iterator]).toEqual('function');
       expect(keys.next()).toEqual({ done: false, value: 'foo' });
@@ -503,6 +503,17 @@ describe('URLQueryParams', () => {
         urlQueryParams.set('test', char);
         expect(urlQueryParams.toString()).toEqual(`test=${encodedChar}`);
       }
+    });
+  });
+
+  describe('values', () => {
+    it('should return iterator for values', () => {
+      const values = urlQueryParams.values();
+      expect(typeof values[Symbol.iterator]).toEqual('function');
+      expect(values.next()).toEqual({ done: false, value: 'bar' });
+      expect(values.next()).toEqual({ done: false, value: '42' });
+      expect(values.next()).toEqual({ done: false, value: '' });
+      expect(values.next()).toEqual({ done: true, value: undefined });
     });
   });
 
