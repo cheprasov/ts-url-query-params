@@ -18,7 +18,7 @@ An object implementing URLQueryParams can directly be used in a `for...of` struc
 > npm install @cheprasov/url-query-params
 ```
 
-Import in you **.js / .ts** file:
+Import in **.js / .ts** file:
 ```javascript
 import { URLQueryParams } from '@chepraspv/url-query-params';
 ```
