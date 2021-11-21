@@ -2,7 +2,7 @@
 
 ### `npm i @cheprasov/url-query-params`
 
-# URLSearchParams
+# URLQueryParams
 
 The **URLQueryParams** class defines utility methods to work with the query string of a URL. It is a good replacement for standard [URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) class.
 
