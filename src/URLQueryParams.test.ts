@@ -308,6 +308,10 @@ describe('URLQueryParams', () => {
       expect(new URLQueryParams().toObject()).toEqual({});
     });
 
+    it('should decode `+` as space character', () => {
+      expect(new URLQueryParams('q=s+p+a+c+e+s').toObject()).toEqual({ q: 's p a c e s'});
+    });
+
     it('should decode characters', () => {
       for (const char in encodeByChar) {
         if (!encodeByChar.hasOwnProperty(char)) {

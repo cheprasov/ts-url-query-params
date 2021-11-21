@@ -1,1 +1,1 @@
-export * from './URLQueryParams';
+export { default as URLQueryParams } from './URLQueryParams';

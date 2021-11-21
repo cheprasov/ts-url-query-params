@@ -5,6 +5,7 @@
     "module": "commonjs",
     "declaration": true,
     "target": "es5",
+    "downlevelIteration": false,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,7 +17,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "downlevelIteration": true,
     "lib": [
       "dom",
       "dom.iterable",

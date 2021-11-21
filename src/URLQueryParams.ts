@@ -18,23 +18,23 @@ export default class URLQueryParams implements URLSearchParams {
     this[Symbol.iterator] = this._urlSearchParams[Symbol.iterator].bind(this._urlSearchParams);
   }
 
-  append(name: string, value: string) {
+  append(name: string, value: string): void {
     return this._urlSearchParams.append(name, value);
   }
 
   // todo: appendMulti(init: InitType) {}
 
-  delete(name: string) {
+  delete(name: string): void {
     return this._urlSearchParams.delete(name);
   }
 
   // todo: deleteMulti(names: string[]) {}
 
-  entries() {
+  entries(): IterableIterator<[string, string]> {
     return this._urlSearchParams.entries();
   }
 
-  forEach(callbackfn: (value: string, key: string, parent: URLSearchParams) => void, thisArg?: any) {
+  forEach(callbackfn: (value: string, key: string, parent: URLQueryParams) => void, thisArg?: any): void {
     const self = this;
     const callback = thisArg ? callbackfn.bind(thisArg) : callbackfn;
     return this._urlSearchParams.forEach(function (value, key) {
@@ -42,29 +42,29 @@ export default class URLQueryParams implements URLSearchParams {
     });
   }
 
-  get(name: string) {
+  get(name: string): string | null {
     return this._urlSearchParams.get(name);
   }
 
-  getAll(name: string) {
+  getAll(name: string): string[] {
     return this._urlSearchParams.getAll(name);
   }
 
-  has(name: string) {
+  has(name: string): boolean {
     return this._urlSearchParams.has(name);
   }
 
-  keys() {
+  keys(): IterableIterator<string> {
     return this._urlSearchParams.keys();
   }
 
-  set(name: string, value: string) {
+  set(name: string, value: string): void {
     return this._urlSearchParams.set(name, value);
   }
 
   // todo: setMulti(init: InitType) {}
 
-  sort() {
+  sort(): void {
     return this._urlSearchParams.sort();
   }
 
@@ -84,7 +84,7 @@ export default class URLQueryParams implements URLSearchParams {
     return params.join('&');
   }
 
-  values() {
+  values(): IterableIterator<string> {
     return this._urlSearchParams.values();
   }
 
