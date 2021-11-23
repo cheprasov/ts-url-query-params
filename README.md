@@ -15,10 +15,10 @@ An object implementing URLQueryParams can directly be used in a `for...of` struc
 ### 1. How to install
 
 ```bash
-> npm install @cheprasov/url-query-params
+> npm i @cheprasov/url-query-params
 ```
 
-Import in you **.js / .ts** file:
+Import in **.js / .ts** file:
 ```javascript
 import { URLQueryParams } from '@chepraspv/url-query-params';
 ```
@@ -41,55 +41,55 @@ new URLQueryParams('a=1&b=2&c=3').toObject(); // { a: 1, b: 2, c: 3 }
 Returns a URLSearchParams object instance.
 
 #### 3.2 Methods
-> **URLSearchParams.append** (`name: string, value: string`): void
+> **URLQueryParams.append** (`name: string, value: string`): void
 
 Appends a specified key/value pair as a new search parameter.
 
-> **URLSearchParams.delete** (`name: string`): void
+> **URLQueryParams.delete** (`name: string`): void
 
 Deletes the given search parameter, and its associated value, from the list of all search parameters.  
 
-> **URLSearchParams.entries** (): IterableIterator<[string, string]>
+> **URLQueryParams.entries** (): IterableIterator<[string, string]>
 
 Returns an iterator allowing iteration through all key/value pairs contained in this object.
 
-> **URLSearchParams.forEach** (`callbackfn: (value: string, key: string, parent: URLQueryParams) => void, thisArg?: any`): void
+> **URLQueryParams.forEach** (`callbackfn: (value: string, key: string, parent: URLQueryParams) => void, thisArg?: any`): void
  
 Allows iteration through all values contained in this object via a callback function.
 
-> **URLSearchParams.get** (`name: string`): string | null
+> **URLQueryParams.get** (`name: string`): string | null
 
 Returns the first value associated with the given search parameter.
 
-> **URLSearchParams.getAll** (`name: string`): string[]
+> **URLQueryParams.getAll** (`name: string`): string[]
 
 Returns all the values associated with a given search parameter.
 
-> **URLSearchParams.has** (`name: string`): boolean
+> **URLQueryParams.has** (`name: string`): boolean
 
 Returns a boolean value indicating if such a given parameter exists.
 
-> **URLSearchParams.keys** (): IterableIterator<string>
+> **URLQueryParams.keys** (): IterableIterator<string>
 
 Returns an iterator allowing iteration through all keys of the key/value pairs contained in this object.
 
-> **URLSearchParams.set** (`name: string, value: string`): void
+> **URLQueryParams.set** (`name: string, value: string`): void
 
 Sets the value associated with a given search parameter to the given value. If there are several values, the others are deleted.
 
-> **URLSearchParams.sort** (): void
+> **URLQueryParams.sort** (): void
 
 Sorts all key/value pairs, if any, by their keys.
 
-> **URLSearchParams.toObject** (): Record<string, string>
+> **URLQueryParams.toObject** (): Record<string, string>
 
 Returns new object created from key/values params.
 
-> **URLSearchParams.toString** (): string
+> **URLQueryParams.toString** (): string
  
 Returns a string containing a query string suitable for use in a URL.
 
-> **URLSearchParams.values** (): IterableIterator<string>
+> **URLQueryParams.values** (): IterableIterator<string>
 
 Returns an iterator allowing iteration through all values of the key/value pairs contained in this object.
 
