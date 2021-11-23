@@ -36,62 +36,76 @@ new URLQueryParams('a=1&b=2&c=3').toObject(); // { a: 1, b: 2, c: 3 }
 ### 3. Documentation
 
 #### 3.1 Constructor
-> new **URLQueryParams** (`string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams`)
-
-Returns a URLSearchParams object instance.
+```typescript
+// Returns a URLSearchParams object instance.
+new URLQueryParams(init?: string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams)
+```
 
 #### 3.2 Methods
-> **URLQueryParams.append** (`name: string, value: string`): void
+```typescript
+// Appends a specified key/value pair as a new search parameter. 
+URLSearchParams.append(name: string, value: string): void 
+```
 
-Appends a specified key/value pair as a new search parameter.
+```typescript
+// Deletes the given search parameter, and its associated value, from the list of all search parameters.  
+URLSearchParams.delete(name: string): void
+```
 
-> **URLQueryParams.delete** (`name: string`): void
+```typescript
+// Returns an iterator allowing iteration through all key/value pairs contained in this object.
+URLSearchParams.entries(): IterableIterator<[string, string]>
+```
 
-Deletes the given search parameter, and its associated value, from the list of all search parameters.  
+```typescript
+// Allows iteration through all values contained in this object via a callback function.
+URLSearchParams.forEach(callbackfn: (value: string, key: string, parent: URLQueryParams) => void, thisArg?: any): void
+```
 
-> **URLQueryParams.entries** (): IterableIterator<[string, string]>
+```typescript
+// Returns the first value associated with the given search parameter.
+URLSearchParams.get(name: string): string | null
+```
 
-Returns an iterator allowing iteration through all key/value pairs contained in this object.
+```typescript
+// Returns all the values associated with a given search parameter.
+URLSearchParams.getAll(name: string): string[]
+```
 
-> **URLQueryParams.forEach** (`callbackfn: (value: string, key: string, parent: URLQueryParams) => void, thisArg?: any`): void
- 
-Allows iteration through all values contained in this object via a callback function.
+```typescript
+// Returns a boolean value indicating if such a given parameter exists.
+URLSearchParams.has(name: string): boolean
+```
 
-> **URLQueryParams.get** (`name: string`): string | null
+```typescript
+// Returns an iterator allowing iteration through all keys of the key/value pairs contained in this object.
+URLSearchParams.keys(): IterableIterator<string>
+```
 
-Returns the first value associated with the given search parameter.
+```typescript
+// Sets the value associated with a given search parameter to the given value. If there are several values, the others are deleted.
+URLSearchParams.set(name: string, value: string): void
+```
 
-> **URLQueryParams.getAll** (`name: string`): string[]
+```typescript
+// Sorts all key/value pairs, if any, by their keys.
+URLSearchParams.sort(): void
+```
 
-Returns all the values associated with a given search parameter.
+```typescript
+// Returns new object created from key/values params.
+URLSearchParams.toObject(): Record<string, string>
+```
 
-> **URLQueryParams.has** (`name: string`): boolean
+```typescript
+// Returns a string containing a query string suitable for use in a URL.
+URLSearchParams.toString(): string
+```
 
-Returns a boolean value indicating if such a given parameter exists.
-
-> **URLQueryParams.keys** (): IterableIterator<string>
-
-Returns an iterator allowing iteration through all keys of the key/value pairs contained in this object.
-
-> **URLQueryParams.set** (`name: string, value: string`): void
-
-Sets the value associated with a given search parameter to the given value. If there are several values, the others are deleted.
-
-> **URLQueryParams.sort** (): void
-
-Sorts all key/value pairs, if any, by their keys.
-
-> **URLQueryParams.toObject** (): Record<string, string>
-
-Returns new object created from key/values params.
-
-> **URLQueryParams.toString** (): string
- 
-Returns a string containing a query string suitable for use in a URL.
-
-> **URLQueryParams.values** (): IterableIterator<string>
-
-Returns an iterator allowing iteration through all values of the key/value pairs contained in this object.
+```typescript
+// Returns an iterator allowing iteration through all values of the key/value pairs contained in this object.
+URLSearchParams.values(): IterableIterator<string>
+```
 
 ## Something does not work
 
