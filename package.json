@@ -1,6 +1,6 @@
 {
   "name": "@cheprasov/url-query-params",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Alexander Cheprasov",
   "description": "The URLQueryParams class defines utility methods to work with the query string of a URL. It is a good replacement for standard URLSearchParams class",
   "keywords": [
