@@ -1,6 +1,6 @@
-export declare type InitType = string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams;
+export type InitType = string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams;
 export declare const isURLQueryParamsInstance: (some: any) => some is URLQueryParams;
-export default class URLQueryParams implements URLSearchParams {
+export default class URLQueryParams {
     private readonly _urlSearchParams;
     [Symbol.iterator]: () => IterableIterator<[string, string]>;
     constructor(init?: InitType);
@@ -14,7 +14,7 @@ export default class URLQueryParams implements URLSearchParams {
     keys(): IterableIterator<string>;
     set(name: string, value: string): void;
     sort(): void;
-    toObject(): Record<string, string>;
+    toObject(): Record<string, string | string[]>;
     toString(): string;
     values(): IterableIterator<string>;
 }

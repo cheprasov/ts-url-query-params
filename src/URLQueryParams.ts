@@ -2,90 +2,96 @@ import encodeURIComponentRFC3986 from './encodeURIComponentRFC3986';
 
 export type InitType = string[][] | Record<string, string> | string | URLSearchParams | URLQueryParams;
 
-export const isURLQueryParamsInstance = (some: any): some is URLQueryParams  => {
-  return some instanceof URLQueryParams;
-}
+export const isURLQueryParamsInstance = (some: any): some is URLQueryParams => {
+    return some instanceof URLQueryParams;
+};
 
-export default class URLQueryParams implements URLSearchParams {
-  
-  private readonly _urlSearchParams: URLSearchParams;
-  [Symbol.iterator]: () => IterableIterator<[string, string]>
-  
-  constructor(init?: InitType) {
-    this._urlSearchParams = new URLSearchParams(
-        isURLQueryParamsInstance(init) ? init._urlSearchParams : init,
-    );
-    this[Symbol.iterator] = this._urlSearchParams[Symbol.iterator].bind(this._urlSearchParams);
-  }
+export default class URLQueryParams {
 
-  append(name: string, value: string): void {
-    return this._urlSearchParams.append(name, value);
-  }
+    private readonly _urlSearchParams: URLSearchParams;
+    // @ts-ignore
+    [Symbol.iterator]: () => IterableIterator<[string, string]>;
 
-  // todo: appendMulti(init: InitType) {}
+    constructor(init?: InitType) {
+        this._urlSearchParams = new URLSearchParams(isURLQueryParamsInstance(init) ? init._urlSearchParams : init);
+        this[Symbol.iterator] = this._urlSearchParams[Symbol.iterator].bind(this._urlSearchParams);
+    }
 
-  delete(name: string): void {
-    return this._urlSearchParams.delete(name);
-  }
+    append(name: string, value: string): void {
+        return this._urlSearchParams.append(name, value);
+    }
 
-  // todo: deleteMulti(names: string[]) {}
+    // todo: appendMulti(init: InitType) {}
 
-  entries(): IterableIterator<[string, string]> {
-    return this._urlSearchParams.entries();
-  }
+    delete(name: string): void {
+        return this._urlSearchParams.delete(name);
+    }
 
-  forEach(callbackfn: (value: string, key: string, parent: URLQueryParams) => void, thisArg?: any): void {
-    const self = this;
-    const callback = thisArg ? callbackfn.bind(thisArg) : callbackfn;
-    return this._urlSearchParams.forEach(function (value, key) {
-      return callback(value, key, self);
-    });
-  }
+    // todo: deleteMulti(names: string[]) {}
 
-  get(name: string): string | null {
-    return this._urlSearchParams.get(name);
-  }
+    entries(): IterableIterator<[string, string]> {
+        return this._urlSearchParams.entries();
+    }
 
-  getAll(name: string): string[] {
-    return this._urlSearchParams.getAll(name);
-  }
+    forEach(callbackfn: (value: string, key: string, parent: URLQueryParams) => void, thisArg?: any): void {
+        const self = this;
+        const callback = thisArg ? callbackfn.bind(thisArg) : callbackfn;
+        return this._urlSearchParams.forEach(function (value, key) {
+            return callback(value, key, self);
+        });
+    }
 
-  has(name: string): boolean {
-    return this._urlSearchParams.has(name);
-  }
+    get(name: string): string | null {
+        return this._urlSearchParams.get(name);
+    }
 
-  keys(): IterableIterator<string> {
-    return this._urlSearchParams.keys();
-  }
+    getAll(name: string): string[] {
+        return this._urlSearchParams.getAll(name);
+    }
 
-  set(name: string, value: string): void {
-    return this._urlSearchParams.set(name, value);
-  }
+    has(name: string): boolean {
+        return this._urlSearchParams.has(name);
+    }
 
-  // todo: setMulti(init: InitType) {}
+    keys(): IterableIterator<string> {
+        return this._urlSearchParams.keys();
+    }
 
-  sort(): void {
-    return this._urlSearchParams.sort();
-  }
+    set(name: string, value: string): void {
+        return this._urlSearchParams.set(name, value);
+    }
 
-  toObject(): Record<string, string> {
-    const obj: Record<string, string> = {};
-    this.forEach((value, key) => {
-      obj[key] = value;
-    });
-    return obj;
-  }
+    // todo: setMulti(init: InitType) {}
 
-  toString(): string {
-    const params: string[] = [];
-    this.forEach((value, key) => {
-      params.push(`${encodeURIComponentRFC3986(key)}=${encodeURIComponentRFC3986(value)}`);
-    });
-    return params.join('&');
-  }
+    sort(): void {
+        return this._urlSearchParams.sort();
+    }
 
-  values(): IterableIterator<string> {
-    return this._urlSearchParams.values();
-  }
+    toObject(): Record<string, string | string[]> {
+        const obj: Record<string, string | string[]> = {};
+        this.forEach((value, key) => {
+            if (key in obj) {
+                if (!Array.isArray(obj[key])) {
+                    obj[key] = [obj[key] as string];
+                }
+                (obj[key] as string[]).push(value);
+            } else {
+                obj[key] = value;
+            }
+        });
+        return obj;
+    }
+
+    toString(): string {
+        const params: string[] = [];
+        this.forEach((value, key) => {
+            params.push(`${encodeURIComponentRFC3986(key)}=${encodeURIComponentRFC3986(value)}`);
+        });
+        return params.join('&');
+    }
+
+    values(): IterableIterator<string> {
+        return this._urlSearchParams.values();
+    }
 
 }

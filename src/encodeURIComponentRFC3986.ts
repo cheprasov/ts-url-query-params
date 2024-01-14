@@ -1,5 +1,5 @@
 
-const replacer = (char: String) => {
+const replacer = (char: string) => {
     return '%' + char.charCodeAt(0).toString(16).toUpperCase();
 };
 
